@@ -37,8 +37,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [savedPlan, setSavedPlan, isLoaded] = useLocalStorage<FitnessPlan | null>("fitnessPlan", null);
-  const [savedProfile, setSavedProfile] = useLocalStorage<UserProfile | null>("userProfile", null);
+  const [savedProfile, setSavedProfile, isProfileLoaded] = useLocalStorage<UserProfile | null>("userProfile", null);
   const [plan, setPlan] = useState<FitnessPlan | null>(null);
+  const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
     if (isLoaded && savedPlan) {
@@ -48,11 +49,18 @@ export default function Home() {
   }, [isLoaded, savedPlan]);
 
   useEffect(() => {
+    if (isProfileLoaded && savedProfile) {
+      setCurrentProfile(savedProfile);
+    }
+  }, [isProfileLoaded, savedProfile]);
+
+  useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
 
   const generatePlan = async (profile: UserProfile) => {
     setIsLoading(true);
+    setCurrentProfile(profile);
     try {
       const res = await fetch("/api/generate-plan", {
         method: "POST",
@@ -73,7 +81,12 @@ export default function Home() {
   };
 
   const handleRegenerate = () => {
-    if (savedProfile) generatePlan(savedProfile);
+    const profile = currentProfile || savedProfile;
+    if (profile) {
+      generatePlan(profile);
+    } else {
+      alert("No profile found. Please create a new plan.");
+    }
   };
 
   const handleBack = () => {
@@ -102,7 +115,7 @@ export default function Home() {
             exit="exit"
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
           >
-            <PlanDisplay plan={plan} onRegenerate={handleRegenerate} onBack={handleBack} />
+            <PlanDisplay plan={plan} profile={currentProfile || savedProfile} onRegenerate={handleRegenerate} onBack={handleBack} isLoading={isLoading} />
           </motion.div>
         ) : (
           <motion.div

@@ -34,9 +34,17 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm">
           <p className="flex items-center justify-center gap-1">
-            Built with <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-red-500" /> using Next.js & AI
+            Built with <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-red-500" /> by{" "}
+            <a 
+              href="https://github.com/deepakparagi" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-violet-400 hover:text-violet-300 font-semibold transition"
+            >
+              deepak_paragi
+            </a>
           </p>
-          <p className="mt-2 text-gray-500">© 2025 FitAI Coach. A demo project.</p>
+          <p className="mt-2 text-gray-500">© 2025 FitAI Coach. Powered by Next.js & AI</p>
         </div>
       </div>
     </footer>

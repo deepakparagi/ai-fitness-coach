@@ -43,9 +43,9 @@ export default function Navbar({ darkMode, setDarkMode, onGetStarted }: Props) {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled 
-          ? "glass border-b border-gray-200/20 dark:border-gray-700/30 shadow-lg" 
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/30 dark:border-gray-700/30 shadow-lg shadow-gray-200/20 dark:shadow-black/20" 
           : "bg-transparent"
       }`}
     >
@@ -57,9 +57,13 @@ export default function Navbar({ darkMode, setDarkMode, onGetStarted }: Props) {
             whileHover={{ scale: 1.02 }}
             onClick={() => scrollToSection("#home")}
           >
-            <div className="p-2.5 gradient-bg rounded-xl shadow-lg shadow-violet-500/25">
+            <motion.div 
+              className="p-2.5 gradient-bg-animated rounded-xl shadow-lg shadow-violet-500/30"
+              whileHover={{ rotate: [0, -10, 10, 0] }}
+              transition={{ duration: 0.5 }}
+            >
               <Dumbbell className="w-6 h-6 text-white" />
-            </div>
+            </motion.div>
             <div className="hidden sm:block">
               <span className="text-xl font-bold gradient-text">FitAI Coach</span>
               <p className="text-xs text-gray-500 dark:text-gray-400 -mt-0.5">AI-Powered Fitness</p>
@@ -67,14 +71,14 @@ export default function Navbar({ darkMode, setDarkMode, onGetStarted }: Props) {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-full p-1.5">
             {navLinks.map((link) => (
               <motion.button
                 key={link.name}
                 onClick={() => scrollToSection(link.href)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition font-medium rounded-lg hover:bg-violet-50 dark:hover:bg-violet-900/20"
+                className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition-all duration-300 font-medium rounded-full hover:bg-white dark:hover:bg-gray-700 hover:shadow-md"
               >
                 {link.name}
               </motion.button>
@@ -87,29 +91,34 @@ export default function Navbar({ darkMode, setDarkMode, onGetStarted }: Props) {
               whileHover={{ scale: 1.1, rotate: 180 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              className="p-2.5 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
             >
               {darkMode ? <Sun className="w-5 h-5 text-yellow-500" /> : <Moon className="w-5 h-5 text-gray-600" />}
             </motion.button>
 
             {/* CTA Button */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 10px 30px -5px rgba(139, 92, 246, 0.4)" }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 if (onGetStarted) onGetStarted();
                 else scrollToSection("#get-started");
               }}
-              className="hidden sm:flex items-center gap-2 px-5 py-2.5 gradient-bg text-white font-semibold rounded-xl shadow-lg shadow-violet-500/25 hover:shadow-xl transition"
+              className="hidden sm:flex items-center gap-2 px-5 py-2.5 gradient-bg-animated text-white font-semibold rounded-xl shadow-lg shadow-violet-500/25 transition-all duration-300"
             >
-              <Sparkles className="w-4 h-4" />
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-4 h-4" />
+              </motion.div>
               Start Free
             </motion.button>
 
             {/* Mobile menu button */}
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="md:hidden p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800"
+              className="md:hidden p-2.5 rounded-xl bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

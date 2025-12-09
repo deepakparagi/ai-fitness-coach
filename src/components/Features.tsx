@@ -81,18 +81,32 @@ export default function Features() {
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.8, borderRadius: "50%" }}
-              whileInView={{ opacity: 1, scale: 1, borderRadius: "1rem" }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              whileHover={{ y: -8, scale: 1.02, boxShadow: "0 25px 50px -12px rgba(139, 92, 246, 0.25)" }}
-              className="glass-card rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300"
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group relative glass-card-hover rounded-xl sm:rounded-2xl p-4 sm:p-6 overflow-hidden"
             >
-              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 sm:mb-4 shadow-lg`}>
+              {/* Gradient overlay on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+              
+              {/* Icon with animated background */}
+              <motion.div 
+                className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 sm:mb-4 shadow-lg`}
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                transition={{ duration: 0.5 }}
+              >
                 <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{feature.title}</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{feature.description}</p>
+                {/* Glow effect */}
+                <div className={`absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br ${feature.color} blur-xl opacity-50 group-hover:opacity-80 transition-opacity duration-300`} />
+              </motion.div>
+              
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 group-hover:gradient-text transition-all duration-300">{feature.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
+              
+              {/* Bottom accent line */}
+              <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`} />
             </motion.div>
           ))}
         </div>
