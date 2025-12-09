@@ -49,9 +49,9 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
   };
   const bmiCategory = getBmiCategory(parseFloat(bmi));
 
-  const inputClass = "w-full p-4 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-violet-500 dark:focus:border-violet-500 outline-none transition text-lg";
-  const labelClass = "block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300";
-  const selectClass = "w-full p-4 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-violet-500 outline-none transition text-lg cursor-pointer";
+  const inputClass = "w-full p-3 sm:p-4 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-violet-500 dark:focus:border-violet-500 outline-none transition text-base sm:text-lg";
+  const labelClass = "block text-xs sm:text-sm font-semibold mb-2 text-gray-700 dark:text-gray-300";
+  const selectClass = "w-full p-3 sm:p-4 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 focus:border-violet-500 outline-none transition text-base sm:text-lg cursor-pointer";
 
   const SelectCard = ({ value, current, onChange, icon: Icon, label, description }: any) => (
     <motion.div
@@ -85,34 +85,34 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 px-2"
         >
-          <span className="text-violet-600 dark:text-violet-400 font-semibold text-sm uppercase tracking-wider">Get Started</span>
-          <h2 className="text-4xl sm:text-5xl font-bold mt-4 mb-6">
+          <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">Get Started</span>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mt-3 sm:mt-4 mb-4 sm:mb-6">
             Create Your <span className="gradient-text">Perfect Plan</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400">
             Tell us about yourself and let AI craft your personalized fitness journey.
           </p>
         </motion.div>
 
         {/* Progress bar */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <div className="flex items-center justify-center gap-1 sm:gap-2 mb-6 sm:mb-8 px-4">
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition ${
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base transition ${
                 step >= s ? "gradient-bg text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-500"
               }`}>
                 {s}
               </div>
-              {s < 3 && <div className={`w-16 h-1 mx-2 rounded ${step > s ? "gradient-bg" : "bg-gray-200 dark:bg-gray-700"}`} />}
+              {s < 3 && <div className={`w-8 sm:w-16 h-1 mx-1 sm:mx-2 rounded ${step > s ? "gradient-bg" : "bg-gray-200 dark:bg-gray-700"}`} />}
             </div>
           ))}
         </div>
 
         <motion.form
           onSubmit={handleSubmit}
-          className="glass-card rounded-3xl shadow-2xl p-8 md:p-10"
+          className="glass-card rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10"
         >
           {/* Step 1: Basic Info */}
           <AnimatePresence mode="wait">
@@ -133,7 +133,7 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
                 <input type="text" required className={inputClass} value={profile.name}
                   onChange={(e) => setProfile({ ...profile, name: e.target.value })} placeholder="Enter your name" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className={labelClass}>Age</label>
                   <input type="number" required min={10} max={100} className={inputClass} value={profile.age}
@@ -149,7 +149,7 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
                   </select>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className={labelClass}><Ruler className="w-4 h-4 inline mr-1" />Height (cm)</label>
                   <input type="number" required min={100} max={250} className={inputClass} value={profile.height}
@@ -211,7 +211,7 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
               </h3>
               <div>
                 <label className={labelClass}>What&apos;s your primary goal?</label>
-                <div className="grid grid-cols-2 gap-3 mt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                   <SelectCard value="weight_loss" current={profile.fitnessGoal} icon={Scale} label="Weight Loss" description="Burn fat & slim down"
                     onChange={(v: string) => setProfile({ ...profile, fitnessGoal: v as UserProfile["fitnessGoal"] })} />
                   <SelectCard value="muscle_gain" current={profile.fitnessGoal} icon={Activity} label="Muscle Gain" description="Build strength & size"
@@ -224,11 +224,11 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
               </div>
               <div>
                 <label className={labelClass}>Your fitness level</label>
-                <div className="grid grid-cols-3 gap-3 mt-2">
+                <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 mt-2">
                   {["beginner", "intermediate", "advanced"].map((level) => (
                     <motion.div key={level} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                       onClick={() => setProfile({ ...profile, fitnessLevel: level as UserProfile["fitnessLevel"] })}
-                      className={`p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all ${
+                      className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all text-sm sm:text-base ${
                         profile.fitnessLevel === level ? "border-violet-500 bg-violet-50 dark:bg-violet-900/20 font-semibold" : "border-gray-200 dark:border-gray-700"
                       }`}>{level}</motion.div>
                   ))}
@@ -236,11 +236,11 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
               </div>
               <div>
                 <label className={labelClass}><MapPin className="w-4 h-4 inline mr-1" />Where will you workout?</label>
-                <div className="grid grid-cols-3 gap-3 mt-2">
+                <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 mt-2">
                   {["home", "gym", "outdoor"].map((loc) => (
                     <motion.div key={loc} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                       onClick={() => setProfile({ ...profile, workoutLocation: loc as UserProfile["workoutLocation"] })}
-                      className={`p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all ${
+                      className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all text-sm sm:text-base ${
                         profile.workoutLocation === loc ? "border-violet-500 bg-violet-50 dark:bg-violet-900/20 font-semibold" : "border-gray-200 dark:border-gray-700"
                       }`}>{loc}</motion.div>
                   ))}
@@ -264,7 +264,7 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
               </h3>
               <div>
                 <label className={labelClass}>Dietary Preference</label>
-                <div className="grid grid-cols-2 gap-3 mt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                   {[
                     { value: "non_veg", label: "Non-Vegetarian", desc: "Includes meat & fish" },
                     { value: "veg", label: "Vegetarian", desc: "No meat or fish" },
@@ -273,22 +273,22 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
                   ].map((diet) => (
                     <motion.div key={diet.value} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                       onClick={() => setProfile({ ...profile, dietaryPreference: diet.value as UserProfile["dietaryPreference"] })}
-                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer transition-all ${
                         profile.dietaryPreference === diet.value ? "border-violet-500 bg-violet-50 dark:bg-violet-900/20" : "border-gray-200 dark:border-gray-700"
                       }`}>
-                      <p className="font-semibold">{diet.label}</p>
-                      <p className="text-sm text-gray-500">{diet.desc}</p>
+                      <p className="font-semibold text-sm sm:text-base">{diet.label}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{diet.desc}</p>
                     </motion.div>
                   ))}
                 </div>
               </div>
               <div>
                 <label className={labelClass}><Brain className="w-4 h-4 inline mr-1" />Stress Level</label>
-                <div className="grid grid-cols-3 gap-3 mt-2">
+                <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 mt-2">
                   {["low", "medium", "high"].map((level) => (
                     <motion.div key={level} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                       onClick={() => setProfile({ ...profile, stressLevel: level as UserProfile["stressLevel"] })}
-                      className={`p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all ${
+                      className={`p-3 sm:p-4 rounded-xl border-2 cursor-pointer text-center capitalize transition-all text-sm sm:text-base ${
                         profile.stressLevel === level ? "border-violet-500 bg-violet-50 dark:bg-violet-900/20 font-semibold" : "border-gray-200 dark:border-gray-700"
                       }`}>{level}</motion.div>
                   ))}
@@ -305,26 +305,26 @@ export default function UserForm({ onSubmit, isLoading }: Props) {
           </AnimatePresence>
 
           {/* Navigation buttons */}
-          <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200 dark:border-gray-700">
             {step > 1 ? (
               <motion.button type="button" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                onClick={(e) => prevStep(e)} className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                <ArrowLeft className="w-5 h-5" /> Back
+                onClick={(e) => prevStep(e)} className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-gray-100 dark:bg-gray-800 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition text-sm sm:text-base w-full sm:w-auto justify-center">
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" /> Back
               </motion.button>
-            ) : <div />}
+            ) : <div className="hidden sm:block" />}
 
             {step < 3 ? (
               <motion.button type="button" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                onClick={(e) => nextStep(e)} className="flex items-center gap-2 px-6 py-3 rounded-xl gradient-bg text-white font-semibold shadow-lg hover:shadow-xl transition">
-                Next <ArrowRight className="w-5 h-5" />
+                onClick={(e) => nextStep(e)} className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl gradient-bg text-white font-semibold shadow-lg hover:shadow-xl transition text-sm sm:text-base w-full sm:w-auto justify-center">
+                Next <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.button>
             ) : (
               <motion.button type="submit" disabled={isLoading} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 px-8 py-4 rounded-xl gradient-bg text-white font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50">
+                className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-xl gradient-bg text-white font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50 text-sm sm:text-base w-full sm:w-auto justify-center">
                 {isLoading ? (
-                  <><Loader2 className="w-5 h-5 animate-spin" /> Generating Your Plan...</>
+                  <><Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" /> <span className="hidden xs:inline">Generating Your Plan...</span><span className="xs:hidden">Generating...</span></>
                 ) : (
-                  <>Generate My Plan <ArrowRight className="w-5 h-5" /></>
+                  <>Generate My Plan <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" /></>
                 )}
               </motion.button>
             )}

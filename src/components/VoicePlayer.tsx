@@ -66,10 +66,10 @@ export default function VoicePlayer({ text, label }: Props) {
     return (
       <button
         disabled
-        className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-400 font-medium cursor-not-allowed"
+        className="flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 rounded-lg sm:rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-400 font-medium cursor-not-allowed text-xs sm:text-sm"
       >
-        <VolumeX className="w-4 h-4" />
-        Not Supported
+        <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" />
+        <span className="hidden xs:inline">Not Supported</span>
       </button>
     );
   }
@@ -77,7 +77,7 @@ export default function VoicePlayer({ text, label }: Props) {
   return (
     <button
       onClick={handlePlay}
-      className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition ${
+      className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 rounded-lg sm:rounded-xl font-medium transition text-xs sm:text-sm ${
         isPlaying
           ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50"
           : "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 hover:bg-violet-200 dark:hover:bg-violet-900/50"
@@ -85,13 +85,13 @@ export default function VoicePlayer({ text, label }: Props) {
     >
       {isPlaying ? (
         <>
-          <StopCircle className="w-4 h-4" />
+          <StopCircle className="w-3 h-3 sm:w-4 sm:h-4" />
           Stop
         </>
       ) : (
         <>
-          <Volume2 className="w-4 h-4" />
-          🔊 {label}
+          <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden xs:inline">🔊</span> {label}
         </>
       )}
     </button>

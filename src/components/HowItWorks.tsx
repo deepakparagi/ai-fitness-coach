@@ -33,10 +33,10 @@ export default function HowItWorks() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16 px-2"
         >
-          <span className="text-violet-600 dark:text-violet-400 font-semibold text-sm uppercase tracking-wider">How It Works</span>
-          <h2 className="text-4xl sm:text-5xl font-bold mt-4 mb-6">
+          <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">How It Works</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-3 sm:mt-4 mb-4 sm:mb-6">
             Your Fitness Journey in <span className="gradient-text">4 Steps</span>
           </h2>
         </motion.div>
@@ -45,7 +45,7 @@ export default function HowItWorks() {
           {/* Connection line */}
           <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 -translate-y-1/2" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {steps.map((step, i) => (
               <motion.div
                 key={i}
@@ -55,15 +55,15 @@ export default function HowItWorks() {
                 transition={{ delay: i * 0.2 }}
                 className="relative"
               >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center shadow-xl relative z-10">
-                  <div className="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                    <step.icon className="w-8 h-8 text-white" />
+                <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 text-center shadow-xl relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 gradient-bg rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-lg">
+                    <step.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
                   </div>
-                  <div className="absolute -top-3 -right-3 w-8 h-8 gradient-bg rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg">
+                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-6 h-6 sm:w-8 sm:h-8 gradient-bg rounded-full flex items-center justify-center text-white font-bold text-xs sm:text-sm shadow-lg">
                     {i + 1}
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{step.description}</p>
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-3">{step.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm md:text-base">{step.description}</p>
                 </div>
               </motion.div>
             ))}

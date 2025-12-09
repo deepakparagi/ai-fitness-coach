@@ -74,37 +74,37 @@ export default function ImageModal({ itemName, type }: Props) {
               exit={{ scale: 0.5, opacity: 0, rotateX: -15, y: 50 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-6 max-w-2xl w-full shadow-2xl"
+              className="bg-white dark:bg-gray-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 max-w-2xl w-full shadow-2xl mx-2"
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">{itemName}</h3>
-                <div className="flex items-center gap-2">
+              <div className="flex justify-between items-center mb-3 sm:mb-4">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold truncate pr-2">{itemName}</h3>
+                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={regenerate}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition"
+                    className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg sm:rounded-xl transition"
                     title="Regenerate image"
                   >
-                    <RefreshCw className="w-5 h-5" />
+                    <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.button>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setIsOpen(false)}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition"
+                    className="p-1.5 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg sm:rounded-xl transition"
                   >
-                    <X className="w-5 h-5" />
+                    <X className="w-4 h-4 sm:w-5 sm:h-5" />
                   </motion.button>
                 </div>
               </div>
 
-              <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center overflow-hidden relative">
+              <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 rounded-xl sm:rounded-2xl flex items-center justify-center overflow-hidden relative">
                 {(isLoading || !imageLoaded) && !error && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gray-100 dark:bg-gray-700">
-                    <Loader2 className="w-10 h-10 animate-spin text-violet-500" />
-                    <p className="text-sm text-gray-500">Generating AI image...</p>
-                    <p className="text-xs text-gray-400">This may take a few seconds</p>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 sm:gap-3 bg-gray-100 dark:bg-gray-700 p-4">
+                    <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 animate-spin text-violet-500" />
+                    <p className="text-xs sm:text-sm text-gray-500 text-center">Generating AI image...</p>
+                    <p className="text-xs text-gray-400 text-center">This may take a few seconds</p>
                   </div>
                 )}
 
@@ -133,7 +133,7 @@ export default function ImageModal({ itemName, type }: Props) {
                 )}
               </div>
 
-              <p className="mt-4 text-center text-sm text-gray-500">
+              <p className="mt-3 sm:mt-4 text-center text-xs sm:text-sm text-gray-500">
                 🤖 AI-generated image for &quot;{itemName}&quot;
               </p>
             </motion.div>
