@@ -5,6 +5,9 @@ export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.OPENROUTER_API_KEY) {
+      throw new Error("OPENROUTER_API_KEY is not configured");
+    }
     const profile: UserProfile = await req.json();
 
     const prompt = `You are an elite certified personal trainer and sports nutritionist with 20+ years of experience. Create a COMPREHENSIVE, DETAILED, and PROFESSIONAL fitness plan.
@@ -32,6 +35,7 @@ REQUIREMENTS:
 6. Diet plan must match ${profile.dietaryPreference.replace("_", " ")} preference with realistic, delicious meals
 7. Provide 5 actionable, specific tips
 8. Write a personalized, motivating message using the client's name
+9. Create a consolidated grocery list for the week based on the diet plan
 
 Return ONLY this JSON structure:
 {
@@ -126,7 +130,12 @@ Return ONLY this JSON structure:
     "Tip 4",
     "Tip 5"
   ],
-  "motivation": "Personalized message here"
+  "motivation": "Personalized message here",
+  "groceryList": [
+    "Item 1",
+    "Item 2",
+    "Item 3"
+  ]
 }
 
 IMPORTANT: 
@@ -142,7 +151,7 @@ IMPORTANT:
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:3000",
+        "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
         "X-Title": "AI Fitness Coach",
       },
       body: JSON.stringify({

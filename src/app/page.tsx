@@ -7,15 +7,16 @@ import Features from "@/components/Features";
 import HowItWorks from "@/components/HowItWorks";
 import UserForm from "@/components/UserForm";
 import PlanDisplay from "@/components/PlanDisplay";
+import PlanHistory, { HistoryItem } from "@/components/PlanHistory";
 import Footer from "@/components/Footer";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { UserProfile, FitnessPlan } from "@/lib/types";
 
 // Zoom match cut transition variants
 const zoomMatchCut = {
-  initial: { scale: 0.9, opacity: 0, filter: "blur(10px)" },
+  initial: { scale: 0.9, opacity: 0, filter: "blur(20px)" },
   animate: { scale: 1, opacity: 1, filter: "blur(0px)" },
-  exit: { scale: 1.1, opacity: 0, filter: "blur(10px)" },
+  exit: { scale: 1.1, opacity: 0, filter: "blur(20px)" },
 };
 
 // Shape morph transition
@@ -27,26 +28,28 @@ const shapeMorph = {
 
 // Swipe transition
 const swipeUp = {
-  initial: { y: 100, opacity: 0 },
+  initial: { y: 60, opacity: 0 },
   animate: { y: 0, opacity: 1 },
-  exit: { y: -100, opacity: 0 },
+  exit: { y: -60, opacity: 0 },
 };
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [savedPlan, setSavedPlan, isLoaded] = useLocalStorage<FitnessPlan | null>("fitnessPlan", null);
+  const [showHistory, setShowHistory] = useState(false);
+  const [planHistory, setPlanHistory, isHistoryLoaded] = useLocalStorage<HistoryItem[]>("fitnessPlanHistory", []);
   const [savedProfile, setSavedProfile, isProfileLoaded] = useLocalStorage<UserProfile | null>("userProfile", null);
   const [plan, setPlan] = useState<FitnessPlan | null>(null);
   const [currentProfile, setCurrentProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
-    if (isLoaded && savedPlan) {
-      setPlan(savedPlan);
-      setShowForm(true);
+    if (isHistoryLoaded && planHistory.length > 0 && !plan) {
+      // Optional: Load most recent plan or just stay on home
+      // setPlan(planHistory[0].plan);
+      // setShowForm(true);
     }
-  }, [isLoaded, savedPlan]);
+  }, [isHistoryLoaded, planHistory, plan]);
 
   useEffect(() => {
     if (isProfileLoaded && savedProfile) {
@@ -70,7 +73,15 @@ export default function Home() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setPlan(data);
-      setSavedPlan(data);
+
+      const newHistoryItem: HistoryItem = {
+        id: crypto.randomUUID(),
+        date: new Date().toISOString(),
+        plan: data,
+        profile: profile
+      };
+
+      setPlanHistory([newHistoryItem, ...planHistory]);
       setSavedProfile(profile);
     } catch (error) {
       console.error("Error:", error);
@@ -91,7 +102,6 @@ export default function Home() {
 
   const handleBack = () => {
     setPlan(null);
-    setSavedPlan(null);
   };
 
   const handleGetStarted = () => {
@@ -103,7 +113,29 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} onGetStarted={handleGetStarted} />
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        onGetStarted={handleGetStarted}
+        onOpenHistory={() => setShowHistory(true)}
+      />
+
+      <PlanHistory
+        isOpen={showHistory}
+        onClose={() => setShowHistory(false)}
+        history={planHistory}
+        onSelect={(item) => {
+          setPlan(item.plan);
+          setCurrentProfile(item.profile);
+          setShowHistory(false);
+        }}
+        onDelete={(id) => {
+          setPlanHistory(planHistory.filter(item => item.id !== id));
+          if (plan?.workoutPlan === planHistory.find(i => i.id === id)?.plan.workoutPlan) {
+            setPlan(null);
+          }
+        }}
+      />
 
       <AnimatePresence mode="wait">
         {plan ? (
@@ -113,7 +145,7 @@ export default function Home() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
           >
             <PlanDisplay plan={plan} profile={currentProfile || savedProfile} onRegenerate={handleRegenerate} onBack={handleBack} isLoading={isLoading} />
           </motion.div>
@@ -124,7 +156,7 @@ export default function Home() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
           >
             <Hero onGetStarted={handleGetStarted} />
             <Features />
@@ -136,7 +168,7 @@ export default function Home() {
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
                 >
                   <UserForm onSubmit={generatePlan} isLoading={isLoading} />
                 </motion.div>

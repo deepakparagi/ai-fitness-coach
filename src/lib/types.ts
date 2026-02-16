@@ -43,5 +43,6 @@ export interface FitnessPlan {
   workoutPlan: DayWorkout[];
   dietPlan: DayMeals;
   tips: string[];
+  groceryList: string[];
   motivation: string;
 }

@@ -63,9 +63,10 @@ export default function Features() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
           className="text-center mb-10 sm:mb-16 px-2"
         >
           <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs sm:text-sm uppercase tracking-wider">Features</span>
@@ -81,18 +82,18 @@ export default function Features() {
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.05, duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
               whileHover={{ y: -8, scale: 1.02 }}
               className="group relative glass-card-hover rounded-xl sm:rounded-2xl p-4 sm:p-6 overflow-hidden"
             >
               {/* Gradient overlay on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              
+
               {/* Icon with animated background */}
-              <motion.div 
+              <motion.div
                 className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-3 sm:mb-4 shadow-lg`}
                 whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                 transition={{ duration: 0.5 }}
@@ -101,10 +102,10 @@ export default function Features() {
                 {/* Glow effect */}
                 <div className={`absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br ${feature.color} blur-xl opacity-50 group-hover:opacity-80 transition-opacity duration-300`} />
               </motion.div>
-              
+
               <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 group-hover:gradient-text transition-all duration-300">{feature.title}</h3>
               <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
-              
+
               {/* Bottom accent line */}
               <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left`} />
             </motion.div>

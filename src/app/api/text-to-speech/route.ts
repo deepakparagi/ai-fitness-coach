@@ -4,11 +4,15 @@ export async function POST(req: NextRequest) {
   try {
     const { text } = await req.json();
 
+    if (!process.env.ELEVENLABS_API_KEY) {
+      return NextResponse.json({ error: "ELEVENLABS_API_KEY is not configured" }, { status: 500 });
+    }
+
     const response = await fetch("https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "xi-api-key": process.env.ELEVENLABS_API_KEY || "",
+        "xi-api-key": process.env.ELEVENLABS_API_KEY,
       },
       body: JSON.stringify({
         text,
